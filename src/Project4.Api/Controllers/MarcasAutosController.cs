@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Project4.Api.Extensions;
 using Project4.Application.Endpoints.MarcasAutos.Queries;
 
-namespace TemplateProject.Api.Controllers
+namespace Project4.Api.Controllers
 {
     [ExcludeFromCodeCoverage]
     [ApiController]

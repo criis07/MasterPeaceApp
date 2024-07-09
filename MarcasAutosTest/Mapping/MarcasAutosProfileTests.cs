@@ -4,12 +4,12 @@ using Xunit;
 
 namespace Project4.Application.Tests.Mapping;
 
-public class PeopleProfileTests
+public class MarcasAutosProfileTests
 {
     [Fact]
     public void VerifyConfiguration()
     {
-        var configuration = new MapperConfiguration(cfg => cfg.AddProfile<PeopleProfile>());
+        var configuration = new MapperConfiguration(cfg => cfg.AddProfile<MarcasAutosProfile>());
 
         configuration.AssertConfigurationIsValid();
     }
