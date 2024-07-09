@@ -18,7 +18,7 @@ namespace TemplateProject.Api.Controllers
         {
             _mediator = mediator;
         }
-
+        //Creamos nuestro punto de entrada para enviarlo a la clase handler por medio del mediator 
         [HttpGet]
         [Route("/marcas")]
         public async Task<ActionResult> GetMarcasAutosAsync()

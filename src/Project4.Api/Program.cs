@@ -37,6 +37,7 @@ builder.Services.AddApiVersioning(options =>
     options.DefaultApiVersion = ApiVersion.Default;
 });
 
+//Inyectamos dependencias por medio de program.cs
 builder.Services.AddScoped<IPrincipalService, PrincipalService>();
 
 builder.Services.AddScoped<IMarcasAutosService, MarcasAutosService>();
