@@ -12,6 +12,6 @@ RUN dotnet publish ./src/Project4.Api -c Release -o out
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
-EXPOSE 5432
+EXPOSE 8080
 COPY --from=build /app/out .
 ENTRYPOINT ["dotnet", "Project4.Api.dll"]
