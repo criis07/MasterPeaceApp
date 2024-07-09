@@ -7,7 +7,7 @@ using Project4.Domain.Common;
 
 namespace Project4.Application.Endpoints.MarcasAutos
 {
-    public record MarcasAutos
+    public class MarcasAutos : AuditableEntity
     {
         public int? Id { get; set; }
         public string? Name { get; set; }

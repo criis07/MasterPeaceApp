@@ -11,9 +11,9 @@ public static class SeedDataExtension
         // should exist the first time the application is run.
 
         builder.Entity<MarcasAutos>().HasData(
-            new MarcasAutos { Id = 1, Name = "Yaris" },
-            new MarcasAutos { Id = 2, Name = "Celica" },
-            new MarcasAutos { Id = 3, Name = "Supra" }
+            new MarcasAutos { Id = 1, Name = "Yaris"},
+            new MarcasAutos { Id = 2, Name = "Celica"},
+            new MarcasAutos { Id = 3, Name = "Supra"}
         );
     }
 }
