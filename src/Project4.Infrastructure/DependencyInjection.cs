@@ -31,7 +31,7 @@ public static class DependencyInjection
 
         services.AddSingleton<IDateTimeService, DateTimeService>();
         services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
-
+        services.AddLogging(); // Asegúrate de tener esta línea si no la tienes ya
 
         return services;
     }

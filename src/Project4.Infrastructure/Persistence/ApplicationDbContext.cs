@@ -25,21 +25,6 @@ namespace Project4.Infrastructure.Persistence
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            foreach (var entity in ChangeTracker.Entries<AuditableEntity>())
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        entity.Entity.CreatedBy = _principalService.UserId;
-                        entity.Entity.CreatedOn = _dateTimeService.UtcNow;
-                        break;
-                    case EntityState.Modified:
-                        entity.Entity.ModifiedBy = _principalService.UserId;
-                        entity.Entity.ModifiedOn = _dateTimeService.UtcNow;
-                        break;
-                }
-            }
-
             return base.SaveChangesAsync(cancellationToken);
         }
         //Constructor de nuestra estructura de datos

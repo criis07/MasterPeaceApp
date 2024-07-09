@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -13,6 +16,7 @@ public class MarcasAutosUnitTesting
     private readonly DbContextOptions<ApplicationDbContext> _options;
     private readonly Mock<IPrincipalService> _principalServiceMock;
     private readonly Mock<IDateTimeService> _dateTimeServiceMock;
+    private readonly Mock<DbSet<MarcasAutos>> _marcasAutosDbSetMock;
 
     public MarcasAutosUnitTesting()
     {
@@ -22,17 +26,25 @@ public class MarcasAutosUnitTesting
 
         _principalServiceMock = new Mock<IPrincipalService>();
         _dateTimeServiceMock = new Mock<IDateTimeService>();
+        _marcasAutosDbSetMock = new Mock<DbSet<MarcasAutos>>();
     }
-    //Valida que retorne la información correcta 
+
+    private async Task SeedData(ApplicationDbContext context, params MarcasAutos[] marcas)
+    {
+        context.marcas_autos.AddRange(marcas);
+        await context.SaveChangesAsync();
+    }
+
     [Fact]
     public async Task GetAllMarcasAutos_ReturnsCorrectData()
     {
         using (var context = new ApplicationDbContext(_options, _principalServiceMock.Object, _dateTimeServiceMock.Object))
         {
-            context.marcas_autos.Add(new MarcasAutos { Id = 1, Name = "Yaris" });
-            context.marcas_autos.Add(new MarcasAutos { Id = 2, Name = "Celica" });
-            context.marcas_autos.Add(new MarcasAutos { Id = 3, Name = "Supra" });
-            await context.SaveChangesAsync();
+            await SeedData(context,
+                new MarcasAutos { Id = 1, Name = "Yaris" },
+                new MarcasAutos { Id = 2, Name = "Celica" },
+                new MarcasAutos { Id = 3, Name = "Supra" }
+            );
         }
 
         using (var context = new ApplicationDbContext(_options, _principalServiceMock.Object, _dateTimeServiceMock.Object))
@@ -46,13 +58,12 @@ public class MarcasAutosUnitTesting
             Assert.Contains(result, r => r.Name == "Supra");
         }
     }
-    //Valida que retorne una lista vacía cuando no hay datos
+
     [Fact]
     public async Task GetAllMarcasAutos_ReturnsEmptyListWhenNoData()
     {
         using (var context = new ApplicationDbContext(_options, _principalServiceMock.Object, _dateTimeServiceMock.Object))
         {
-            // Asegurarse de que la base de datos esté limpia antes de la prueba
             context.marcas_autos.RemoveRange(context.marcas_autos);
             await context.SaveChangesAsync();
         }
@@ -64,15 +75,16 @@ public class MarcasAutosUnitTesting
             Assert.Empty(result);
         }
     }
-    //Valida que la base de datos tenga alguno o algunos datos en específico
+
     [Fact]
     public async Task GetAllMarcasAutos_ReturnsObjectsInBD()
     {
         using (var context = new ApplicationDbContext(_options, _principalServiceMock.Object, _dateTimeServiceMock.Object))
         {
-            context.marcas_autos.Add(new MarcasAutos { Id = 4, Name = "Chevrolet" });
-            context.marcas_autos.Add(new MarcasAutos { Id = 5, Name = "Picanto" });
-            await context.SaveChangesAsync();
+            await SeedData(context,
+                new MarcasAutos { Id = 4, Name = "Chevrolet" },
+                new MarcasAutos { Id = 5, Name = "Picanto" }
+            );
         }
 
         using (var context = new ApplicationDbContext(_options, _principalServiceMock.Object, _dateTimeServiceMock.Object))
@@ -84,16 +96,16 @@ public class MarcasAutosUnitTesting
         }
     }
 
-    //Valida cuando se han insertado determinado numero de elementos y los devuelve correctamente
     [Fact]
     public async Task GetAllMarcasAutos_ReturnsCorrectCount()
     {
         using (var context = new ApplicationDbContext(_options, _principalServiceMock.Object, _dateTimeServiceMock.Object))
         {
-            context.marcas_autos.Add(new MarcasAutos { Id = 6, Name = "Civic" });
-            context.marcas_autos.Add(new MarcasAutos { Id = 7, Name = "Accord" });
-            context.marcas_autos.Add(new MarcasAutos { Id = 8, Name = "CR-V" });
-            await context.SaveChangesAsync();
+            await SeedData(context,
+                new MarcasAutos { Id = 6, Name = "Civic" },
+                new MarcasAutos { Id = 7, Name = "Accord" },
+                new MarcasAutos { Id = 8, Name = "CR-V" }
+            );
         }
 
         using (var context = new ApplicationDbContext(_options, _principalServiceMock.Object, _dateTimeServiceMock.Object))
@@ -105,13 +117,11 @@ public class MarcasAutosUnitTesting
         }
     }
 
-    //Valida cuando no hay data pero aun asi no retorna nulo
     [Fact]
     public async Task GetAllMarcasAutos_HandlesNoDataGracefully()
     {
         using (var context = new ApplicationDbContext(_options, _principalServiceMock.Object, _dateTimeServiceMock.Object))
         {
-            // Asegurarse de que la base de datos esté limpia antes de la prueba
             context.marcas_autos.RemoveRange(context.marcas_autos);
             await context.SaveChangesAsync();
         }
@@ -125,5 +135,4 @@ public class MarcasAutosUnitTesting
             Assert.Empty(result);
         }
     }
-
 }
