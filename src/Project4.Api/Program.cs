@@ -7,13 +7,9 @@ using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using Project4.Application.Interfaces.Persistence.DataServices.Users.Queries;
 using Project4.Infrastructure.Persistence.DataServices.MarcasAutoService;
-using Project4.Application.Interfaces.Persistence.DataServices.People.Queries;
-using Project4.Infrastructure.Persistence.DataServices.People.Queries;
 using Microsoft.EntityFrameworkCore;
 using Project4.Application.Interfaces.Persistence;
 using Project4.Infrastructure.Persistence;
-using Project4.Application.Interfaces.Persistence.DataServices.People.Commands;
-using Project4.Infrastructure.Persistence.DataServices.People.Commands;
 using Project4.Infrastructure.Services;
 
 // Configure Services
@@ -44,8 +40,6 @@ builder.Services.AddApiVersioning(options =>
 builder.Services.AddScoped<IPrincipalService, PrincipalService>();
 
 builder.Services.AddScoped<IMarcasAutosService, MarcasAutosService>();
-builder.Services.AddScoped<IGetPeopleDataService, GetPeopleDataService>();
-builder.Services.AddScoped<IAddPersonDataService, AddPersonDataService>();
 builder.Services.AddScoped<IDateTimeService, DateTimeService>();
 
 

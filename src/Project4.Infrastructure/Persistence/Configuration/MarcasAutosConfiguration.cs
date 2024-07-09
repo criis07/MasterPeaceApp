@@ -4,17 +4,17 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Project4.Infrastructure.Persistence.Configuration;
 
-public class PersonConfiguration : IEntityTypeConfiguration<Person>
+public class MarcasAutosConfiguration : IEntityTypeConfiguration<MarcasAutos>
 {
-    public void Configure(EntityTypeBuilder<Person> builder)
+    public void Configure(EntityTypeBuilder<MarcasAutos> builder)
     {
-        builder.ToTable("person");
+        builder.ToTable("marcas_autos");
 
-        builder.Property(t => t.FirstName)
+        builder.Property(t => t.Id)
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(t => t.LastName)
+        builder.Property(t => t.Name)
             .IsRequired()
             .HasMaxLength(100);
     }

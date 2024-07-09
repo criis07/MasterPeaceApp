@@ -20,7 +20,7 @@ namespace Project4.Infrastructure.Persistence.DataServices.MarcasAutoService
         }
         public async Task<IEnumerable<Domain.Entities.MarcasAutos>> GetAllMarcasAutos(CancellationToken cancellationToken = default)
         {
-           return await _marcasAutosDBContext.MarcasAutos.ToListAsync(cancellationToken);
+           return await _marcasAutosDBContext.marcas_autos.ToListAsync(cancellationToken);
             
         }
     }

@@ -7,7 +7,7 @@ using Project4.Domain.Common;
 
 namespace Project4.Application.DTO
 {
-    public class MarcasAutosDTO : AuditableEntity
+    public class MarcasAutosDTO 
     {
         public int? Id { get; set; }
 
