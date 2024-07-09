@@ -100,4 +100,16 @@ public class EndpointResultExtensionsTests
 
         result.As<OkObjectResult>().Value.Should().BeOfType<string>().And.Be("It works!");
     }
+    [Fact]
+    public void ToActionResultReturnsServerErrorStatusCodeResultOnServerError()
+    {
+        // Arrange
+        var result = new EndpointResult(EndpointResultStatus.Error).ToActionResult();
+
+        // Act
+        var statusCodeResult = Assert.IsType<StatusCodeResult>(result);
+
+        // Assert
+        statusCodeResult.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+    }
 }
