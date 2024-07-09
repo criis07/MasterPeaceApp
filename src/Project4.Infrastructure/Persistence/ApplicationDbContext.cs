@@ -42,7 +42,7 @@ namespace Project4.Infrastructure.Persistence
 
             return base.SaveChangesAsync(cancellationToken);
         }
-
+        //Constructor de nuestra estructura de datos
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

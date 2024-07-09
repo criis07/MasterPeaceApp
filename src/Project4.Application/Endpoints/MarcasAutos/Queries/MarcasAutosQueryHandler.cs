@@ -24,6 +24,7 @@ namespace Project4.Application.Endpoints.MarcasAutos.Queries
 
         public async Task<EndpointResult<IEnumerable<MarcasAutosDTO>>> Handle(MarcasAutosQuery request, CancellationToken cancellationToken)
         {
+            //Hacemos solicitud al servicio para acceder a la bd de postgres
              var autos = await _marcasAutosService.GetAllMarcasAutos();
 
             var autosDto = _mapper.Map<MarcasAutosDTO[]>(autos);
