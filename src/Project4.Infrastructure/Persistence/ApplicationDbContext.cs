@@ -14,6 +14,8 @@ namespace Project4.Infrastructure.Persistence
 
         public DbSet<MarcasAutos> marcas_autos { get; set; } = null!;
 
+        public DbSet<User> users { get; set; } = null!;
+
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options,
             IPrincipalService principalService,
@@ -34,6 +36,6 @@ namespace Project4.Infrastructure.Persistence
 
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             builder.SeedData();
-        }
+        } 
     }
 }

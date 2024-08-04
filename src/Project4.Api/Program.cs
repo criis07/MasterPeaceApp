@@ -1,20 +1,20 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using Project4.Api.Services;
 using Project4.Application;
 using Project4.Application.Interfaces.Persistence;
 using Project4.Application.Interfaces.Services;
-using Project4.Infrastructure;
 using Project4.Infrastructure.Persistence;
 using Project4.Infrastructure.Services;
 using Project4.Infrastructure.Persistence.DataServices.MarcasAutoService;
 using Project4.Application.Interfaces.Persistence.DataServices.Users.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Project4.Application.Interfaces.Persistence.DataServices.User;
+using Project4.Infrastructure.Persistence.DataServices.UserService;
 
 public class Program
 {
@@ -37,6 +37,28 @@ public class Program
         // Agregar DbContext
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateIssuerSigningKey = true,
+                ValidateLifetime = true,
+                ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                ValidAudience = builder.Configuration["Jwt:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey
+                (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+
+            };
+        });
+
+        builder.Services.AddScoped<IUserService, UserService>();
 
         // Agregar la interfaz y la implementación del contexto de la aplicación
         builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
@@ -80,6 +102,7 @@ public class Program
             await next();
         });
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapHealthChecks("/health");
