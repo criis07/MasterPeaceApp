@@ -27,7 +27,7 @@ namespace Project4.Application.Endpoints.Users.Queries
 
         public async Task<EndpointResult<IEnumerable<CreateCatalogDTO>>> Handle(GetCatalogsQuery request, CancellationToken cancellationToken)
         {
-            var catalogList = await _catalogService.GetAllcatalogsAsync(cancellationToken);
+            var catalogList = await _catalogService.GetAllCatalogsAsync(cancellationToken);
 
             var catalogs = _mapper.Map<CreateCatalogDTO[]>(catalogList);
 
