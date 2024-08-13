@@ -17,7 +17,7 @@ namespace Project4.Infrastructure.Persistence.Configuration
             builder.ToTable("User");
 
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).UseIdentityColumn().ValueGeneratedOnAdd();
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
             builder.Property(x => x.Name).HasMaxLength(25);
             builder.Property(x => x.LastName).HasMaxLength(25);

@@ -15,6 +15,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Project4.Application.Interfaces.Persistence.DataServices.User;
 using Project4.Infrastructure.Persistence.DataServices.UserService;
+using Project4.Application.Interfaces.Persistence.DataServices.Catalog;
+using Project4.Infrastructure.Persistence.DataServices.CatalogService;
 
 public class Program
 {
@@ -60,8 +62,11 @@ public class Program
 
         builder.Services.AddScoped<IUserService, UserService>();
 
+        //DB entities
+        builder.Services.AddScoped<ICatalogService, CatalogService>();
+
         // Agregar la interfaz y la implementación del contexto de la aplicación
-        builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+        builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>()!);
         builder.Services.AddApiVersioning(options =>
         {
             options.AssumeDefaultVersionWhenUnspecified = true;
@@ -72,6 +77,10 @@ public class Program
         builder.Services.AddScoped<IPrincipalService, PrincipalService>();
         builder.Services.AddScoped<IMarcasAutosService, MarcasAutosService>();
         builder.Services.AddScoped<IDateTimeService, DateTimeService>();
+
+
+
+
 
         builder.Services.AddControllers();
         builder.Services.AddSwaggerGen(c =>
