@@ -1,7 +1,3 @@
-# Docker
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
 - develop
 
@@ -38,6 +34,7 @@ stages:
       displayName: 'Compilar Solución'
       inputs:
         command: 'build'
+        workingDirectory: '/MasterPeaceApp'
         projects: '**/*.sln'
         arguments: '--configuration $(buildConfiguration) --no-restore'
 
