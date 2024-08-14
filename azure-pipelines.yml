@@ -23,7 +23,7 @@ stages:
       displayName: 'Instalar .NET SDK'
       inputs:
         packageType: 'sdk'
-        version: '8.x.x'  # Ajustar a la versión que necesitas
+        version: '8.0.303'  # Ajustar a la versión que necesitas
         installationPath: $(Agent.ToolsDirectory)/dotnet
     - task: NuGetCommand@2
       displayName: 'Restaurar Paquetes NuGet'
