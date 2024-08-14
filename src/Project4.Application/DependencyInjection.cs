@@ -17,7 +17,7 @@ public static class DependencyInjection
         var thisAssembly = Assembly.GetExecutingAssembly();
         services.AddAutoMapper(thisAssembly);
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        services.AddMediatR(thisAssembly);
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(thisAssembly));
 
         return services;
     }
