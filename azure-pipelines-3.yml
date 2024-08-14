@@ -69,6 +69,3 @@ stages:
         targetPath: '$(Build.ArtifactStagingDirectory)'
         artifactName: 'drop'
 
-    - publish: $(System.DefaultWorkingDirectory)/bin/$(buildConfiguration)/
-      artifact: drop
-      displayName: 'Publicar Artefactos'
