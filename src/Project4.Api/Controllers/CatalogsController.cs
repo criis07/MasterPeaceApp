@@ -36,5 +36,19 @@ namespace Project4.Api.Controllers
             var result = await _mediator.Send(request);
             return result.ToActionResult();
         }
+
+        [HttpPut]
+        [Route("/api/v1/catalog/{id}")]
+        public async Task<ActionResult> UpdateCatalog([FromRoute] int id, [FromBody] CatalogCommand command)
+        {
+            var request = new UpdateCatalogCommand
+            {
+                CatalogDescription = command.CatalogDescription,
+                ProductCode = command.ProductCode,
+                CatalogId = id
+            };
+            var result = await _mediator.Send(request);
+            return result.ToActionResult();
+        }
     }
 }
