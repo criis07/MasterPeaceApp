@@ -40,6 +40,10 @@ stages:
         restoreSolution: '**/*.sln'
     
     - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: '**/*.csproj'
+    - task: DotNetCoreCLI@2
       displayName: 'Compilar Solución'
       inputs:
         command: 'build'
