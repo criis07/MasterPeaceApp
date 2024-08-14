@@ -57,6 +57,11 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
+    
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.BinariesDirectory)'
+        artifactName: 'drop'
 
     - publish: $(System.DefaultWorkingDirectory)/bin/$(buildConfiguration)/
       artifact: drop
