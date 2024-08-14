@@ -25,6 +25,13 @@ stages:
         packageType: 'sdk'
         version: '8.0.303'  # Ajustar a la versión que necesitas
         installationPath: $(Agent.ToolsDirectory)/dotnet
+    
+    - task: UseDotNet@2
+      displayName: 'Instalar .NET Runtime'
+      inputs:
+        packageType: 'runtime'
+        version: '8.0.7'  # Especifica la versión del runtime que necesitas
+        installationPath: $(Agent.ToolsDirectory)/dotnet
     - task: NuGetCommand@2
       displayName: 'Restaurar Paquetes NuGet'
       inputs:
