@@ -34,7 +34,7 @@ stages:
       displayName: 'Compilar Solución'
       inputs:
         command: 'build'
-        workingDirectory: '/MasterPeaceApp'
+        workingDirectory: '$(Build.SourcesDirectory)/MasterPeaceApp'
         projects: '**/*.sln'
         arguments: '--configuration $(buildConfiguration) --no-restore'
 
