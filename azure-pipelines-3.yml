@@ -55,8 +55,7 @@ stages:
       inputs:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          $(tag)
+        tags: 'my-app-netcore-image:latest'
     
     - task: DotNetCoreCLI@2
       inputs:
