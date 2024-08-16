@@ -70,7 +70,6 @@ stages:
         artifactName: 'drop'
     - task: LambdaNETCoreDeploy@1
       inputs:
-        functionRuntime: 'dotnet8'
         awsCredentials: 'AWS-Connection'
         regionName: 'us-west-1'
         command: 'deployFunction'
@@ -80,4 +79,5 @@ stages:
         functionHandler: 'Project4.Api::FunctionHandlerAsync'
         functionMemory: 512
         functionTimeout: 30
+        additionalArgs: '--function-runtime dotnet8'
 
