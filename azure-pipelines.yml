@@ -1,4 +1,4 @@
-trigger:
+trigger:    
 - develop
 
 resources:
@@ -80,4 +80,5 @@ stages:
         functionMemory: 512
         functionTimeout: 30
         additionalArgs: '--function-runtime dotnet8'
+        functionRole: 'arn:aws:iam::577638379978:role/excuteLambdaFunction'
 
