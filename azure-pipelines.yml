@@ -1,5 +1,8 @@
 trigger:
-- develop
+- Master
+
+resources:
+- repo: self
 
 variables:
   tag: '$(Build.BuildId)'
@@ -16,11 +19,37 @@ stages:
       name: 'Default'
     steps:
     - checkout: self
+
+    - task: UseDotNet@2
+      displayName: 'Instalar .NET SDK'
+      inputs:
+        packageType: 'sdk'
+        version: '8.0.303'
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+    
+    - task: UseDotNet@2
+      displayName: 'Instalar .NET Runtime'
+      inputs:
+        packageType: 'runtime'
+        version: '8.0.7'
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+
+    - task: NuGetCommand@2
+      displayName: 'Restaurar Paquetes NuGet'
+      inputs:
+        restoreSolution: '**/*.sln'
+    
     - task: DotNetCoreCLI@2
       inputs:
-        command: 'publish'
+        command: 'restore'
         projects: '**/*.csproj'
-        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    - task: DotNetCoreCLI@2
+      displayName: 'Compilar Solución'
+      inputs:
+        command: 'build'
+        projects: '**/*.sln'
+        arguments: '--configuration $(buildConfiguration) --no-restore'
+
     - task: LambdaNETCoreDeploy@1
       inputs:
         awsCredentials: 'AWS-Connection'
@@ -30,4 +59,26 @@ stages:
         functionHandler: 'Project4.Api::FunctionHandlerAsync'
         functionMemory: 512
         functionTimeout: 30
+
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        tags: |
+          my-app-netcore-image:latest
+    
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'publish'
+        projects: '**/*.csproj'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+      
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)'
+        artifactName: 'drop'
+
+
+
         
