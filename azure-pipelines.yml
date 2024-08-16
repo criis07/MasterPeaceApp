@@ -1,9 +1,6 @@
 trigger:
 - develop
 
-resources:
-- repo: self
-
 variables:
   tag: '$(Build.BuildId)'
   buildConfiguration: 'Release'
@@ -19,15 +16,18 @@ stages:
       name: 'Default'
     steps:
     - checkout: self
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'publish'
+        projects: '**/*.csproj'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     - task: LambdaNETCoreDeploy@1
       inputs:
         awsCredentials: 'AWS-Connection'
         regionName: 'us-west-1'
         command: 'deployFunction'
-        packageOnly: false
-        lambdaProjectPath: '$(Build.SourcesDirectory)/Project4.sln'
         functionName: 'MasterPeaceAppLambda'
         functionHandler: 'Project4.Api::FunctionHandlerAsync'
         functionMemory: 512
         functionTimeout: 30
-
+        
