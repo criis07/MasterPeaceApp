@@ -74,7 +74,7 @@ stages:
         regionName: 'us-west-1'
         command: 'deployFunction'
         packageOnly: false
-        lambdaProjectPath: '$(System.DefaultWorkingDirectory)/s/src/Project4.Api'
+        lambdaProjectPath: '$(System.DefaultWorkingDirectory)/src/Project4.Api'
         functionName: 'MasterPeaceAppFunction'
         functionHandler: 'Project4.Api::FunctionHandlerAsync'
         functionMemory: 512
