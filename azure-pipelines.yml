@@ -42,19 +42,7 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
-        projects: '**/*.csproj' 
-    - task: LambdaNETCoreDeploy@1
-      inputs:
-        awsCredentials: 'AWS-Connection'
-        regionName: 'us-west-1'
-        command: 'deployFunction'
-        packageOnly: false
-        lambdaProjectPath: 'Project4.sln'
-        functionName: 'MasterPeaceAppLambda'
-        functionHandler: 'Project4.Api::FunctionHandlerAsync'
-        functionMemory: 512
-        functionTimeout: 30
-
+        projects: '**/*.csproj'
     - task: DotNetCoreCLI@2
       displayName: 'Compilar Solución'
       inputs:
@@ -81,6 +69,3 @@ stages:
         targetPath: '$(Build.ArtifactStagingDirectory)'
         artifactName: 'drop'
 
-
-
-        
