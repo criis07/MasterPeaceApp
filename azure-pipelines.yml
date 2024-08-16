@@ -76,7 +76,7 @@ stages:
         packageOnly: false
         lambdaProjectPath: '$(System.DefaultWorkingDirectory)/src/Project4.Api'
         functionName: 'MasterPeaceAppFunction'
-        functionHandler: 'Project4.Api::Project4.Api.FunctionHandler::FunctionHandlerAsync'
+        functionHandler: 'Project4.Api::Project4.Api.Program::FunctionHandlerAsync'
         functionMemory: 512
         functionTimeout: 30
         additionalArgs: '--function-runtime dotnet8'
