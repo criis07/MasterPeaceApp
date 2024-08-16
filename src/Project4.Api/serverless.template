@@ -8,7 +8,7 @@
     "AspNetCoreFunction": {
       "Type": "AWS::Serverless::Function",
         "Properties": {
-            "Handler": "Project4.Api::Project4.Api.FunctionHandler::FunctionHandlerAsync",
+            "Handler": "Project4.Api::Project4.Api.Program::FunctionHandlerAsync",
             "Runtime": "dotnet8",
             "CodeUri": "",
             "MemorySize": 512,
