@@ -70,6 +70,7 @@ stages:
         artifactName: 'drop'
     - task: LambdaNETCoreDeploy@1
       inputs:
+        runtime: 'dotnet8'
         awsCredentials: 'AWS-Connection'
         regionName: 'us-west-1'
         command: 'deployFunction'
