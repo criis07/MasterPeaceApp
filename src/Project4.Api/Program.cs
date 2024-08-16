@@ -88,6 +88,8 @@ public class Program
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Project4.Api", Version = "v1" });
         });
 
+        builder.Services.AddAWSLambdaHosting(LambdaEventSource.RestApi);
+
         var app = builder.Build();
 
         if (app.Environment.IsDevelopment())
@@ -117,6 +119,7 @@ public class Program
         app.MapHealthChecks("/health");
         app.MapControllers();
 
+        app.MapGet("/", () => "Hello from AWS Lambda!");
         // Ejecutar la aplicación
         app.Run();
     }
