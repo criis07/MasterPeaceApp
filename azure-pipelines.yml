@@ -68,4 +68,15 @@ stages:
       inputs:
         targetPath: '$(Build.ArtifactStagingDirectory)'
         artifactName: 'drop'
+    - task: LambdaNETCoreDeploy@1
+      inputs:
+        awsCredentials: 'AWS-Connection'
+        regionName: 'us-west-1'
+        command: 'deployFunction'
+        packageOnly: false
+        lambdaProjectPath: 'project4.Api'
+        functionName: 'MasterPeaceAppLambda'
+        functionHandler: 'Project4.Api::FunctionHandlerAsync'
+        functionMemory: 512
+        functionTimeout: 30
 
