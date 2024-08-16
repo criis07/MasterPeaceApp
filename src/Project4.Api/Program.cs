@@ -88,7 +88,7 @@ public class Program
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Project4.Api", Version = "v1" });
         });
 
-        builder.Services.AddAWSLambdaHosting(LambdaEventSource.RestApi);
+        builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
         var app = builder.Build();
 
