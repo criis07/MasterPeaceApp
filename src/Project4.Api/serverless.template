@@ -7,33 +7,33 @@
   "Resources": {
     "AspNetCoreFunction": {
       "Type": "AWS::Serverless::Function",
-      "Properties": {
-        "Handler": "Project4.Api::FunctionHandlerAsync",
-        "Runtime": "dotnet8",
-        "CodeUri": "",
-        "MemorySize": 512,
-        "Timeout": 30,
-        "Role": null,
-        "Policies": [
-          "AWSLambda_FullAccess"
-        ],
-        "Events": {
-          "ProxyResource": {
-            "Type": "Api",
-            "Properties": {
-              "Path": "/{proxy+}",
-              "Method": "ANY"
+        "Properties": {
+            "Handler": "Project4.Api::Project4.Api.FunctionHandler::FunctionHandlerAsync",
+            "Runtime": "dotnet8",
+            "CodeUri": "",
+            "MemorySize": 512,
+            "Timeout": 30,
+            "Role": null,
+            "Policies": [
+                "AWSLambda_FullAccess"
+            ],
+            "Events": {
+                "ProxyResource": {
+                    "Type": "Api",
+                    "Properties": {
+                        "Path": "/{proxy+}",
+                        "Method": "ANY"
+                    }
+                },
+                "RootResource": {
+                    "Type": "Api",
+                    "Properties": {
+                        "Path": "/",
+                        "Method": "ANY"
+                    }
+                }
             }
-          },
-          "RootResource": {
-            "Type": "Api",
-            "Properties": {
-              "Path": "/",
-              "Method": "ANY"
-            }
-          }
         }
-      }
     }
   },
   "Outputs": {
