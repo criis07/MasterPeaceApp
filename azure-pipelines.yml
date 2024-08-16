@@ -74,7 +74,7 @@ stages:
         regionName: 'us-west-1'
         command: 'deployFunction'
         packageOnly: false
-        lambdaProjectPath: '$(System.DefaultWorkingDirectory)/ci-cdDev/drop'
+        lambdaProjectPath: '$(System.DefaultWorkingDirectory)/'
         functionName: 'MasterPeaceAppFunction'
         functionHandler: 'Project4.Api::FunctionHandlerAsync'
         functionMemory: 512
