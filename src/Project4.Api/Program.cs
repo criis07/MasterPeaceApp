@@ -121,7 +121,7 @@ public class Program
         app.MapHealthChecks("/health");
         app.MapControllers();
 
-        app.MapGet("/", () => "Hello from AWS Lambda!");
+        app.MapGet("/", () => "Hello from AWS Lambda!, primer release TEST");
         // Ejecutar la aplicación
         app.Run();
     }
