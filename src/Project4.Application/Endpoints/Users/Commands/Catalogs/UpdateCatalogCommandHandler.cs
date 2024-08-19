@@ -8,6 +8,7 @@ using MediatR;
 using Project4.Application.DTO.Catalogs;
 using Project4.Application.Interfaces.Persistence.DataServices.Catalog;
 using Project4.Application.Models;
+using Project4.Domain.Entities;
 
 namespace Project4.Application.Endpoints.Users.Commands.Catalogs
 {
@@ -21,9 +22,14 @@ namespace Project4.Application.Endpoints.Users.Commands.Catalogs
             _mapper = mapper;
         }
 
-        public Task<EndpointResult<UpdateCatalogResponse>> Handle(UpdateCatalogCommand request, CancellationToken cancellationToken)
+        public async Task<EndpointResult<UpdateCatalogResponse>> Handle(UpdateCatalogCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var updateCatalog = _mapper.Map<UpdateCatalogDTO>(request);
+
+            var result = await _catalogService.UpdateCatalogAsync(updateCatalog);
+
+            return new EndpointResult<UpdateCatalogResponse>(result);
+
         }
     }
 }

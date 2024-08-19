@@ -40,5 +40,26 @@ namespace Project4.Infrastructure.Persistence.DataServices.CatalogService
         {
             return await _context.catalogs.ToListAsync(cancellationToken);
         }
+
+        public async Task<UpdateCatalogResponse> UpdateCatalogAsync(UpdateCatalogDTO catalogDTO)
+        {
+            var catalog = _context.catalogs.FirstOrDefault(c => c.CatalogId == catalogDTO.CatalogId);
+
+            if (catalog != null)
+            {
+                catalog.ProductCode = catalogDTO.ProductCode == null ? catalog.ProductCode = catalog.ProductCode : catalog.ProductCode = catalogDTO.ProductCode;
+
+                catalog.CatalogDescription = catalogDTO.CatalogDescription == null ? catalog.CatalogDescription = catalog.CatalogDescription : catalog.CatalogDescription = catalogDTO.CatalogDescription;
+
+                // Guardar los cambios en la base de datos
+                _context.catalogs.Update(catalog);
+                await _context.SaveChangesAsync();
+
+                return new UpdateCatalogResponse { Success = true, Message = "Succesfully updated" };
+            };
+
+            return new UpdateCatalogResponse { Success = false, Message = "Catalog not found" };
+
+        }
     }
 }

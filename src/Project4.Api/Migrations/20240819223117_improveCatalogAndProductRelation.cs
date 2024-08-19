@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Project4.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class bdTablesBasicConfigurationsMigration : Migration
+    public partial class improveCatalogAndProductRelation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,13 +38,12 @@ namespace Project4.Api.Migrations
                 {
                     CatalogId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ProductCode = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
+                    ProductCode = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
                     CatalogDescription = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Catalogs", x => x.CatalogId);
-                    table.UniqueConstraint("AK_Catalogs_ProductCode", x => x.ProductCode);
                 });
 
             migrationBuilder.CreateTable(
@@ -82,7 +81,7 @@ namespace Project4.Api.Migrations
                 {
                     ProductId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ProductCodeId = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
+                    ProductCodeId = table.Column<int>(type: "integer", maxLength: 10, nullable: false),
                     ImportDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     BatchId = table.Column<int>(type: "integer", nullable: true),
                     Available = table.Column<bool>(type: "boolean", nullable: true)
@@ -99,7 +98,8 @@ namespace Project4.Api.Migrations
                         name: "FK_Products_Catalogs_ProductCodeId",
                         column: x => x.ProductCodeId,
                         principalTable: "Catalogs",
-                        principalColumn: "ProductCode");
+                        principalColumn: "CatalogId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

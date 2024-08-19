@@ -9,6 +9,7 @@ namespace Project4.Application.DTO.Catalogs
 {
     public class CreateCatalogDTO
     {
+        public int CatalogId { get; set; }
         public string? ProductCode { get; set; }
         public string? CatalogDescription { get; set; }
     }

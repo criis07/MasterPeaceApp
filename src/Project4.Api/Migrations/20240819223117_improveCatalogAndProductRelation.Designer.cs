@@ -12,8 +12,8 @@ using Project4.Infrastructure.Persistence;
 namespace Project4.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240813041333_bdTablesBasicConfigurationsMigration")]
-    partial class bdTablesBasicConfigurationsMigration
+    [Migration("20240819223117_improveCatalogAndProductRelation")]
+    partial class improveCatalogAndProductRelation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,7 +68,6 @@ namespace Project4.Api.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("ProductCode")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("character varying(10)");
 
@@ -160,9 +159,9 @@ namespace Project4.Api.Migrations
                     b.Property<DateTime?>("ImportDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("ProductCodeId")
+                    b.Property<int>("ProductCodeId")
                         .HasMaxLength(10)
-                        .HasColumnType("character varying(10)");
+                        .HasColumnType("integer");
 
                     b.HasKey("ProductId");
 
@@ -249,7 +248,8 @@ namespace Project4.Api.Migrations
                     b.HasOne("Project4.Domain.Entities.Catalog", "Catalog")
                         .WithMany("Products")
                         .HasForeignKey("ProductCodeId")
-                        .HasPrincipalKey("ProductCode");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Batch");
 
