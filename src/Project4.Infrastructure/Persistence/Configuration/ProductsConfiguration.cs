@@ -24,7 +24,6 @@ namespace Project4.Infrastructure.Persistence.Configuration
 
             builder.HasOne(propertyName => propertyName.Catalog)
                 .WithMany(propertyName => propertyName.Products)
-                .HasPrincipalKey(c => c.ProductCode)
                 .HasForeignKey(propertyName => propertyName.ProductCodeId);
 
         } 

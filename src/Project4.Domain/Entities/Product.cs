@@ -13,7 +13,7 @@ namespace Project4.Domain.Entities
         [Key]
         public int ProductId { get; set; }
         [MaxLength(10)]
-        public string? ProductCodeId { get; set; }
+        public int ProductCodeId { get; set; }
         public DateTime? ImportDate { get; set; }
         public int? BatchId { get; set; }
         public bool? Available { get; set; }

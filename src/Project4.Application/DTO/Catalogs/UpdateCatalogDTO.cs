@@ -8,6 +8,6 @@ namespace Project4.Application.DTO.Catalogs
 {
     public class UpdateCatalogDTO : CreateCatalogDTO
     {
-        public string? CatalogId {  get; set; } 
+        public int CatalogId {  get; set; } 
     }
 }
