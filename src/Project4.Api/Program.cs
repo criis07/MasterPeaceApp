@@ -17,6 +17,8 @@ using Project4.Application.Interfaces.Persistence.DataServices.User;
 using Project4.Infrastructure.Persistence.DataServices.UserService;
 using Project4.Application.Interfaces.Persistence.DataServices.Catalog;
 using Project4.Infrastructure.Persistence.DataServices.CatalogService;
+using Project4.Application.Interfaces.Persistence.DataServices.Batch;
+using Project4.Infrastructure.Persistence.DataServices.BatchService;
 
 public class Program
 {
@@ -64,6 +66,7 @@ public class Program
 
         //DB entities
         builder.Services.AddScoped<ICatalogService, CatalogService>();
+        builder.Services.AddScoped<IBatchService, BatchService>();
 
         // Agregar la interfaz y la implementación del contexto de la aplicación
         builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>()!);
