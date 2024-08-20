@@ -36,6 +36,28 @@ namespace Project4.Infrastructure.Persistence.DataServices.CatalogService
             return new CreateCatalogResponse { Success = true, Message = "Catalog successfully added " };
         }
 
+        public async Task<DeleteCatalogResponse> DeleteCatalogAsync(int catalogId)
+        {
+            var catalog = await _context.catalogs.FirstOrDefaultAsync(c => c.CatalogId == catalogId);
+
+            if (catalog == null)
+            {
+                return new DeleteCatalogResponse { Success = false, Message = "Catalog not found" };
+            }
+
+            try
+            {
+                _context.catalogs.Remove(catalog);
+                await _context.SaveChangesAsync();
+                return new DeleteCatalogResponse { Success = true, Message = "Successfully deleted" };
+            }
+            catch (Exception ex)
+            {
+                // Manejar la excepción (log, rethrow, etc.)
+                return new DeleteCatalogResponse { Success = false, Message = "Error while deleting catalog: " + ex.Message };
+            }
+        }
+
         public async Task<IEnumerable<Catalog>> GetAllCatalogsAsync(CancellationToken cancellationToken = default)
         {
             return await _context.catalogs.ToListAsync(cancellationToken);
@@ -43,20 +65,24 @@ namespace Project4.Infrastructure.Persistence.DataServices.CatalogService
 
         public async Task<UpdateCatalogResponse> UpdateCatalogAsync(UpdateCatalogDTO catalogDTO)
         {
-            var catalog = _context.catalogs.FirstOrDefault(c => c.CatalogId == catalogDTO.CatalogId);
+            var catalog = await _context.catalogs.FirstOrDefaultAsync(c => c.CatalogId == catalogDTO.CatalogId);
 
             if (catalog != null)
             {
-                catalog.ProductCode = catalogDTO.ProductCode == null ? catalog.ProductCode = catalog.ProductCode : catalog.ProductCode = catalogDTO.ProductCode;
+                catalog.ProductCode = catalogDTO.ProductCode ?? catalog.ProductCode;
+                catalog.CatalogDescription = catalogDTO.CatalogDescription ?? catalog.CatalogDescription;
 
-                catalog.CatalogDescription = catalogDTO.CatalogDescription == null ? catalog.CatalogDescription = catalog.CatalogDescription : catalog.CatalogDescription = catalogDTO.CatalogDescription;
-
-                // Guardar los cambios en la base de datos
-                _context.catalogs.Update(catalog);
-                await _context.SaveChangesAsync();
-
-                return new UpdateCatalogResponse { Success = true, Message = "Succesfully updated" };
-            };
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return new UpdateCatalogResponse { Success = true, Message = "Successfully updated" };
+                }
+                catch (Exception ex)
+                {
+                    // Manejar excepción (log, rethrow, etc.)
+                    return new UpdateCatalogResponse { Success = false, Message = "Error while updating catalog: " + ex.Message };
+                }
+            }
 
             return new UpdateCatalogResponse { Success = false, Message = "Catalog not found" };
 

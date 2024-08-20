@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project4.Api.Extensions;
 using Project4.Application.DTO.Catalogs;
@@ -45,6 +46,17 @@ namespace Project4.Api.Controllers
             {
                 CatalogDescription = command.CatalogDescription,
                 ProductCode = command.ProductCode,
+                CatalogId = id
+            };
+            var result = await _mediator.Send(request);
+            return result.ToActionResult();
+        }
+        [HttpDelete]
+        [Route("/api/v1/catalog/{id}")]
+        public async Task<ActionResult> DeleteCatalog([FromRoute] int id)
+        {
+            var request = new DeleteCatalogCommand
+            {
                 CatalogId = id
             };
             var result = await _mediator.Send(request);

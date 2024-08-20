@@ -8,5 +8,6 @@ namespace Project4.Application.Interfaces.Persistence.DataServices.Catalog
         Task<CreateCatalogResponse> CreateCatalogAsync(CreateCatalogDTO catalogDTO);
         Task<IEnumerable<Domain.Entities.Catalog>> GetAllCatalogsAsync(CancellationToken cancellationToken = default);
         Task<UpdateCatalogResponse> UpdateCatalogAsync(UpdateCatalogDTO catalogDTO);
+        Task<DeleteCatalogResponse> DeleteCatalogAsync(int catalogId);
     }
 }
