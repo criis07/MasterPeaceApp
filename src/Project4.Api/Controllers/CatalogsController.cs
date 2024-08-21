@@ -21,7 +21,7 @@ namespace Project4.Api.Controllers
         }
 
         [HttpPost]
-        [Route("/api/v1/Catalog")]
+        [Route("/api/v1/catalog")]
         public async Task<ActionResult> CreateCatalogMethod([FromBody] CatalogCommand command)
         {
             var result = await _mediator.Send(command);
@@ -30,7 +30,7 @@ namespace Project4.Api.Controllers
 
 
         [HttpGet]
-        [Route("/api/v1/Catalogs")]
+        [Route("/api/v1/catalogs")]
         public async Task<ActionResult> GetAllCatalogs()
         {
             var request = new GetCatalogsQuery();
