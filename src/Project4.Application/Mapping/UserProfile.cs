@@ -3,7 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.Extensions.Logging;
 using Project4.Application.DTO.Users;
-using Project4.Application.Endpoints.Users.Commands;
+using Project4.Application.Endpoints.APIs.Commands.AuthUsers;
 
 namespace Project4.Application.Mapping
 {

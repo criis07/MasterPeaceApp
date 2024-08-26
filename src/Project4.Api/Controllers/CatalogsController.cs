@@ -1,14 +1,9 @@
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project4.Api.Extensions;
-using Project4.Application.DTO.Catalogs;
-using Project4.Application.Endpoints.MarcasAutos.Queries;
+using Project4.Application.Endpoints.APIs.Queries.Catalogs;
 using Project4.Application.Endpoints.Users.Commands.Catalogs;
-using Project4.Application.Endpoints.Users.Queries;
-using Project4.Application.Interfaces.Persistence.DataServices.Catalog;
-using Project4.Infrastructure.Persistence;
+
 
 namespace Project4.Api.Controllers
 {

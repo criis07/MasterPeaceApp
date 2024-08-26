@@ -10,7 +10,7 @@ using Project4.Application.DTO.Catalogs;
 using Project4.Application.Interfaces.Persistence.DataServices.Catalog;
 using Project4.Application.Models;
 
-namespace Project4.Application.Endpoints.Users.Queries
+namespace Project4.Application.Endpoints.APIs.Queries.Catalogs
 {
     public class GetCatalogsQueryHandler : IRequestHandler<GetCatalogsQuery, EndpointResult<IEnumerable<CreateCatalogDTO>>>
     {
