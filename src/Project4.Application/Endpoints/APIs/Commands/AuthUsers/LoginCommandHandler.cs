@@ -12,7 +12,7 @@ using Project4.Application.Interfaces.Persistence.DataServices.User;
 using Project4.Application.Models;
 using Project4.Domain.Entities;
 
-namespace Project4.Application.Endpoints.Users.Commands
+namespace Project4.Application.Endpoints.APIs.Commands.AuthUsers
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, EndpointResult<LoginResponse>>
     {

@@ -2,10 +2,12 @@ using MediatR;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Mvc;
 using Project4.Application.Endpoints.MarcasAutos.Queries;
-using Project4.Application.Endpoints.Users.Commands;
 using Project4.Api.Extensions;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Project4.Application.Endpoints.Users.Queries.Users;
+using Microsoft.AspNetCore.Identity;
+using Project4.Application.Endpoints.APIs.Commands.AuthUsers;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -50,6 +52,15 @@ namespace Project4.Api.Controllers
                 Id = userId
             };
             var result = await _mediator.Send(request);
+            return result.ToActionResult();
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("/api/sign-in-with-token")]
+        public async Task<ActionResult> SignInWithAccessToken([FromBody] AccessWithTokenCommand accessToken)
+        {
+            var result = await _mediator.Send(accessToken);
             return result.ToActionResult();
         }
     }
