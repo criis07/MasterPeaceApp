@@ -11,11 +11,11 @@ namespace Project4.Api.Controllers
     [ApiController]
     [Route("api/v{version:apiVersion}")]
     [ApiVersion("1.0")]
-    public class MarcasAutosontroller : ControllerBase
+    public class MarcasAutosController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public MarcasAutosontroller(IMediator mediator)
+        public MarcasAutosController(IMediator mediator)
         {
             _mediator = mediator;
         }

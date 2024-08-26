@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Project4.Application.Endpoints.MarcasAutos.Queries;
 using Project4.Application.Endpoints.Users.Commands;
 using Project4.Api.Extensions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Project4.Application.Endpoints.Users.Queries.Users;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -35,6 +37,19 @@ namespace Project4.Api.Controllers
         public async Task<ActionResult> RegisterAuthMethod([FromBody] RegisterCommand command)
         {
             var result = await _mediator.Send(command);
+            return result.ToActionResult();
+        }
+
+        [HttpGet]
+        [Route("/api/user")]
+        public async Task<ActionResult> GetUserInformationMethod()
+        {
+            var userId = User.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
+            var request = new GetUserInfoQuery
+            {
+                Id = userId
+            };
+            var result = await _mediator.Send(request);
             return result.ToActionResult();
         }
     }
