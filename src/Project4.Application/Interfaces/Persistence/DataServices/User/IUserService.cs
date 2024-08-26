@@ -12,5 +12,6 @@ namespace Project4.Application.Interfaces.Persistence.DataServices.User
     {
         Task<RegistrationResponse> RegisterUserAsync(RegisterUserDTO user);
         Task<LoginResponse> LoginUserAsync(LoginDTO loginData);
+        Task<GetUserInfo> GetUserInfoAsync(int id);
     }
 }

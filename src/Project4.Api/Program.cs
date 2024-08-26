@@ -82,7 +82,15 @@ public class Program
         builder.Services.AddScoped<IDateTimeService, DateTimeService>();
 
 
-
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAllPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()   // Permitir cualquier origen
+                       .AllowAnyHeader()   // Permitir cualquier encabezado
+                       .AllowAnyMethod();  // Permitir cualquier método (GET, POST, etc.)
+            });
+        });
 
 
         builder.Services.AddControllers();
@@ -120,6 +128,8 @@ public class Program
 
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.UseCors("AllowAllPolicy");
 
         app.MapHealthChecks("/health");
         app.MapControllers();

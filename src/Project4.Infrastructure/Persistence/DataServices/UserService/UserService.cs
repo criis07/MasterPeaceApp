@@ -38,7 +38,15 @@ namespace Project4.Infrastructure.Persistence.DataServices.UserService
                 var response = new LoginResponse
                 {
                     Success = true,
-                    Message = "Access granted"
+                    Message = "Access granted",
+                    user = new GetUserInfo
+                    { 
+                        Id = result.Id,
+                        Avatar = result.Avatar,
+                        Email = result.Email,
+                        Status = result.Status,
+                        Name = result.Name
+                    }
                 };
                 response.Token = token;
 
@@ -91,6 +99,21 @@ namespace Project4.Infrastructure.Persistence.DataServices.UserService
             });
             await _applicationDbContext.SaveChangesAsync();
             return new RegistrationResponse { Success = true, Message = "User registered" };
+        }
+
+        public async Task<GetUserInfo> GetUserInfoAsync(int id)
+        {
+            var result = await _applicationDbContext.users.FirstOrDefaultAsync(x => x.Id == id);
+
+            return new GetUserInfo
+            {
+                Id = result!.Id,
+                Email = result.Email,
+                Name = result.Name,
+                Avatar = result.Avatar,
+                Status = result.Status
+            };
+
         }
     }
 }
