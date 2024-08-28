@@ -20,6 +20,8 @@ namespace Project4.Infrastructure.Persistence
 
         public DbSet<Batch> batch { get; set; }
 
+        public DbSet<Product> products { get; set; }
+
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options,
             IPrincipalService principalService,

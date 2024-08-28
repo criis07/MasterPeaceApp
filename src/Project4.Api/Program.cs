@@ -19,6 +19,8 @@ using Project4.Application.Interfaces.Persistence.DataServices.Catalog;
 using Project4.Infrastructure.Persistence.DataServices.CatalogService;
 using Project4.Application.Interfaces.Persistence.DataServices.Batch;
 using Project4.Infrastructure.Persistence.DataServices.BatchService;
+using Project4.Application.Interfaces.Persistence.DataServices.Products;
+using Project4.Infrastructure.Persistence.DataServices.ProductsService;
 
 public class Program
 {
@@ -67,6 +69,8 @@ public class Program
         //DB entities
         builder.Services.AddScoped<ICatalogService, CatalogService>();
         builder.Services.AddScoped<IBatchService, BatchService>();
+        builder.Services.AddScoped<IProductsService, ProductsService>();
+        builder.Services.AddScoped<IProductsService, ProductsService>();
 
         // Agregar la interfaz y la implementación del contexto de la aplicación
         builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>()!);
@@ -93,7 +97,11 @@ public class Program
         });
 
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers().AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+            options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+        });
         builder.Services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Project4.Api", Version = "v1" });
