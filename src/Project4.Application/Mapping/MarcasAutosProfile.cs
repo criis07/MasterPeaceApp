@@ -11,6 +11,5 @@ public class MarcasAutosProfile : Profile
         CreateMap<MarcasAutos, MarcasAutosDTO>()
             .ForMember(MA => MA.Id, DT => DT.MapFrom(src => src.Id))
             .ForMember(MA => MA.Name, DT => DT.MapFrom(src => src.Name));
-
     }
 }

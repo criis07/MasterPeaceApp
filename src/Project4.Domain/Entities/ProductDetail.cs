@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Project4.Domain.Entities
 {
@@ -19,6 +20,7 @@ namespace Project4.Domain.Entities
         public int? ProductId { get; set; }
 
         [ForeignKey("ProductId")]
+        [JsonIgnore]
         public Product? Product { get; set; }
     }
 }
