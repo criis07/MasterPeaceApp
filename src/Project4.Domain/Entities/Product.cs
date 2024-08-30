@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Project4.Domain.Entities
 {
@@ -24,6 +25,7 @@ namespace Project4.Domain.Entities
         public Catalog? Catalog { get; set; }
 
         public ICollection<ProductDetail> ProductDetails { get; set; } = null!;
+        [JsonIgnore]
         public ICollection<Invoice> Invoices { get; set; } = null!;
     }
 }

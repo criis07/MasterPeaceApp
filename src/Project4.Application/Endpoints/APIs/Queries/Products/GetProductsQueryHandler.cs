@@ -8,10 +8,11 @@ using MediatR;
 using Project4.Application.DTO.Products;
 using Project4.Application.Interfaces.Persistence.DataServices.Products;
 using Project4.Application.Models;
+using Project4.Domain.Entities;
 
 namespace Project4.Application.Endpoints.APIs.Queries.Products
 {
-    public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, EndpointResult<IEnumerable<GetProductsDTO>>>
+    public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, EndpointResult<PaginatedResult<Product>>>
     {
         private readonly IMapper _mapper;
         private readonly IProductsService _productService;
@@ -20,13 +21,15 @@ namespace Project4.Application.Endpoints.APIs.Queries.Products
             _mapper = mapper;
             _productService = productsService;
         }
-        public async Task<EndpointResult<IEnumerable<GetProductsDTO>>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+        public async Task<EndpointResult<PaginatedResult<Product>>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            var result = await _productService.GetProductsAsync();
+            var result = await _productService.GetProductsAsync(request.Search,
+            request.Sort,
+            request.Order,
+            request.Page,
+            request.Size);
 
-            var response = _mapper.Map<GetProductsDTO[]>(result);
-
-            return new EndpointResult<IEnumerable<GetProductsDTO>>(response);
+            return new EndpointResult<PaginatedResult<Product>> (result);
         }
     }
 }
