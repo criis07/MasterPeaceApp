@@ -15,6 +15,12 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Project4.Application.Interfaces.Persistence.DataServices.User;
 using Project4.Infrastructure.Persistence.DataServices.UserService;
+using Project4.Application.Interfaces.Persistence.DataServices.Catalog;
+using Project4.Infrastructure.Persistence.DataServices.CatalogService;
+using Project4.Application.Interfaces.Persistence.DataServices.Batch;
+using Project4.Infrastructure.Persistence.DataServices.BatchService;
+using Project4.Application.Interfaces.Persistence.DataServices.Products;
+using Project4.Infrastructure.Persistence.DataServices.ProductsService;
 
 public class Program
 {
@@ -60,8 +66,14 @@ public class Program
 
         builder.Services.AddScoped<IUserService, UserService>();
 
+        //DB entities
+        builder.Services.AddScoped<ICatalogService, CatalogService>();
+        builder.Services.AddScoped<IBatchService, BatchService>();
+        builder.Services.AddScoped<IProductsService, ProductsService>();
+        builder.Services.AddScoped<IProductsService, ProductsService>();
+
         // Agregar la interfaz y la implementación del contexto de la aplicación
-        builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+        builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>()!);
         builder.Services.AddApiVersioning(options =>
         {
             options.AssumeDefaultVersionWhenUnspecified = true;
@@ -73,11 +85,29 @@ public class Program
         builder.Services.AddScoped<IMarcasAutosService, MarcasAutosService>();
         builder.Services.AddScoped<IDateTimeService, DateTimeService>();
 
-        builder.Services.AddControllers();
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAllPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()   // Permitir cualquier origen
+                       .AllowAnyHeader()   // Permitir cualquier encabezado
+                       .AllowAnyMethod();  // Permitir cualquier método (GET, POST, etc.)
+            });
+        });
+
+
+        builder.Services.AddControllers().AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+            options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+        });
         builder.Services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Project4.Api", Version = "v1" });
         });
+
+        builder.Services.AddAWSLambdaHosting(LambdaEventSource.RestApi);
 
         var app = builder.Build();
 
@@ -87,6 +117,8 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Project4.Api v1"));
         }
+        app.UseSwagger();
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Project4.Api v1"));
 
         app.UseHttpsRedirection();
 
@@ -105,9 +137,12 @@ public class Program
         app.UseAuthentication();
         app.UseAuthorization();
 
+        app.UseCors("AllowAllPolicy");
+
         app.MapHealthChecks("/health");
         app.MapControllers();
 
+        app.MapGet("/", () => "Hello from AWS Lambda!, primer release TEST");
         // Ejecutar la aplicación
         app.Run();
     }

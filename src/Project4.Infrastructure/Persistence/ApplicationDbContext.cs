@@ -16,6 +16,12 @@ namespace Project4.Infrastructure.Persistence
 
         public DbSet<User> users { get; set; } = null!;
 
+        public DbSet<Catalog> catalogs { get; set; }
+
+        public DbSet<Batch> batch { get; set; }
+
+        public DbSet<Product> products { get; set; }
+
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options,
             IPrincipalService principalService,

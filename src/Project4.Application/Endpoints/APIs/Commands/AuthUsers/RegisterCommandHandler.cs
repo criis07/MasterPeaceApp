@@ -9,7 +9,7 @@ using Project4.Application.DTO.Users;
 using Project4.Application.Interfaces.Persistence.DataServices.User;
 using Project4.Application.Models;
 
-namespace Project4.Application.Endpoints.Users.Commands
+namespace Project4.Application.Endpoints.APIs.Commands.AuthUsers
 {
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, EndpointResult<RegistrationResponse>>
     {

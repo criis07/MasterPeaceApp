@@ -8,9 +8,11 @@ using Project4.Application.DTO.Users;
 
 namespace Project4.Application.Interfaces.Persistence.DataServices.User
 {
-    public  interface IUserService
+    public interface IUserService
     {
         Task<RegistrationResponse> RegisterUserAsync(RegisterUserDTO user);
         Task<LoginResponse> LoginUserAsync(LoginDTO loginData);
+        Task<GetUserInfo> GetUserInfoAsync(int id);
+        Task<LoginResponse>SignInWithTokenAsync(string accessToken);
     }
 }
